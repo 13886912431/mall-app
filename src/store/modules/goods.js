@@ -5,46 +5,58 @@ export default {
     namespaced: true,
     state: {
         sideList: [],
-        goodsList: {
-            list: []
-        },
-        loadingGoods: false,
-        type: ""
+        goodsList: [],
+        loadingSide: false,
+        type: null,
+        limit: 10,
+        sort: "all"
     },
     mutations: {
         setSideList(state, payload) {
             state.sideList = payload;
         },
-        setGoodsList(state, { type, data }) {
-            if (state.type === type) {
-                state.goodsList = {
-                    total: data.total,
-                    list: [...data.list, ...state.goodsList.list]
-                };
-            } else {
-                state.goodsList = data;
-            }
-            state.type = type;
+        setGoodsList(state, payload) {
+            state.goodsList = [...state.goodsList, ...payload];
         },
-        setLoadGoodsStatus(state, payload) {
-            state.loadingGoods = payload;
-        }
+        resetGoodsList(state) {
+            state.goodsList = [];
+        },
+        setLoadSideStatus(state, payload) {
+            state.loadingSide = payload;
+        },
+        setGoodsListType(state, payload) {
+            state.type = payload;
+        },
+        setGoodsListSort(state, payload) {
+            state.sort = payload;
+        },
     },
     actions: {
+        // 左侧菜单列表
         async getSideList({ commit }, type) {
+            commit("setLoadSideStatus", true);
             const res = await api.getSideList(type);
             commit("setSideList", res);
-        },
-        async getGoodsList({ commit }, params) {
-            commit("setLoadGoodsStatus", true);
-            const res = await api.getGoodsList(params);
-            console.log(res);
-            commit("setGoodsList", {
-                type: params.type,
-                data: res
-            });
             await delay(500);
-            commit("setLoadGoodsStatus", false);
+            commit("setLoadSideStatus", false);
+        },
+        // 商品列表
+        async getGoodsList({ commit, state }, parasm) {
+            let { type, page, sort } = parasm;
+            type = type || state.type;
+            sort = sort || state.sort;
+            const res = await api.getGoodsList({
+                size: state.limit, 
+                page,
+                type,
+                sort
+            });
+            console.log(res);
+            
+            commit("setGoodsList", res.list);
+            commit("setGoodsListType", type);
+            commit("setGoodsListSort", sort);
+            return res.list;
         }
     },
 }

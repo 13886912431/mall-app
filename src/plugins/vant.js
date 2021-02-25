@@ -7,7 +7,10 @@ import {
     Image,
     Loading,
     Lazyload,
-    Empty
+    Empty,
+    PullRefresh,
+    List,
+    Stepper
 } from "vant";
 
 Vue.use(Button)
@@ -17,4 +20,7 @@ Vue.use(Button)
     .use(Image)
     .use(Loading)
     .use(Lazyload)
-    .use(Empty);
+    .use(Empty)
+    .use(PullRefresh)
+    .use(List)
+    .use(Stepper);

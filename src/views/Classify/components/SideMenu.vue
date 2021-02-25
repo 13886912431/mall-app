@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 import Animate from "@/utils/animate";
 
 export default {
@@ -26,7 +26,6 @@ export default {
             active: 0,
             onmove: false,
             page: 1,
-            limit: 10,
             sort: "all"
         }
     },
@@ -37,6 +36,10 @@ export default {
         })
     }, 
     methods: {
+        ...mapMutations("goods", {
+            resetGoodsList: "resetGoodsList"
+        }),
+        // 切换左侧菜单
         async changeActive(index) {
             if (this.onmove) return;
             if (this.active === index) return;
@@ -64,16 +67,17 @@ export default {
                 type: this.sideList[index]
             });
         },
-        getGoodsList({ page = 1, type, sort = "all" }) {
+
+        getGoodsList({ page = 1, type }) {
+            this.resetGoodsList();
             this.$store.dispatch("goods/getGoodsList", {
                 page,
-                size: this.limit,
                 type,
-                sort
             });
         }
     },
     watch: {
+        // 顶部菜单切换，左侧菜单数据变化执行
         sideList() {
             this.active = 0;
             const sidemenu = this.$refs.sidemenu;
@@ -94,6 +98,12 @@ export default {
             });
         },
     },
+    mounted() {
+        console.log(1);
+        this.getGoodsList({
+            type: this.sideList[this.active],
+        });
+    }
 }
 </script>
 
