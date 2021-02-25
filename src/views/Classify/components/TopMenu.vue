@@ -27,7 +27,7 @@ export default {
     data() {
         return {
             menuList,
-            active: 0,
+            active: -1,
             onmove: false,
         }
     },
