@@ -80,18 +80,6 @@ export default {
         // 顶部菜单切换，左侧菜单数据变化执行
         sideList() {
             this.active = 0;
-            const sidemenu = this.$refs.sidemenu;
-            new Animate({
-                begin: {
-                    move: sidemenu.scrollTop
-                },
-                end: {
-                    move: 0
-                },
-                onmove(val) {
-                    sidemenu.scrollTop = val.move;
-                },
-            })
 
             this.getGoodsList({
                 type: this.sideList[this.active],
@@ -99,7 +87,6 @@ export default {
         },
     },
     mounted() {
-        console.log(1);
         this.getGoodsList({
             type: this.sideList[this.active],
         });

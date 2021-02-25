@@ -59,7 +59,15 @@
                                 </div>
                                 <div class="bottom between">
                                     <div class="price">¥{{ item.price }}</div>
-                                    <van-stepper v-model="buyNum" theme="round" disable-input />
+                                    <van-stepper
+                                        v-model="item.buyCount"
+                                        theme="round"
+                                        disable-input
+                                        :show-input="item.buyCount !== 0"
+                                        :show-minus="item.buyCount !== 0"
+                                        min="0"
+                                        @change="changeBuyCount(item.id, $event)"
+                                    />
                                 </div>
                             </div>
                         </li>
@@ -82,7 +90,6 @@ export default {
             refreshLoading: false,
             loading: false,
             finished: false,
-            buyNum: 0
         }
     },
     computed: {
@@ -93,7 +100,8 @@ export default {
     },
     methods: {
         ...mapMutations("goods", {
-            resetGoodsList: "resetGoodsList"
+            resetGoodsList: "resetGoodsList",
+            changeCounterMap: "changeCounterMap"
         }),
         changeOptionActive(sort) {
             if (this.optionActive === sort) return;
@@ -131,6 +139,13 @@ export default {
             } else {
                 this.loading = false;
             }
+        },
+        /**
+         * @param {*} id 商品id
+         * @param {*} count 该商品购买数量
+         */
+        changeBuyCount(id, count) {
+            this.changeCounterMap({ id, count });
         }
     }
 }
@@ -207,6 +222,9 @@ export default {
             width: 90px;
             height: 90px;
         }
+    }
+    .bottom {
+        height: 28px;
     }
     .title {
         margin: 5px 0;

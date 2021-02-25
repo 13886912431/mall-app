@@ -1,3 +1,4 @@
+import Vue from "vue";
 import api from "@/api";
 import { delay } from "@/utils";
 
@@ -9,7 +10,8 @@ export default {
         loadingSide: false,
         type: null,
         limit: 10,
-        sort: "all"
+        sort: "all",
+        counterMap: {}
     },
     mutations: {
         setSideList(state, payload) {
@@ -30,6 +32,17 @@ export default {
         setGoodsListSort(state, payload) {
             state.sort = payload;
         },
+        setCounterMap(state, payload) {
+            state.counterMap = payload;
+        },
+        changeCounterMap(state, { id, count }) {
+            if (count === 0) {
+                Vue.delete(state.counterMap, id);
+            } else {
+                Vue.set(state.counterMap, id, count);
+            }
+            localStorage.setItem("counterMap", JSON.stringify(state.counterMap));            
+        }
     },
     actions: {
         // 左侧菜单列表
@@ -51,8 +64,16 @@ export default {
                 type,
                 sort
             });
-            console.log(res);
             
+            res.list.forEach(item => {
+                const count = state.counterMap[item.id];
+                if (count) {
+                    item.buyCount = count;
+                } else {
+                    item.buyCount = 0;
+                }
+            })
+            console.log(res.list);
             commit("setGoodsList", res.list);
             commit("setGoodsListType", type);
             commit("setGoodsListSort", sort);
