@@ -17,5 +17,5 @@ module.exports = {
     },
     productionSourceMap: !(process.env.VUE_APP_ENV === "prod"),
     outputDir: "docs",
-    publicPath: process.env.VUE_APP_ENV === "prod" ? "https://13886912431.github.io/mall-app/" : "/"
+    publicPath: process.env.VUE_APP_ENV === "prod" ? "https://sereinlyl.gitee.io/mall-app/" : "/"
 };
