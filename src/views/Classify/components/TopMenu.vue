@@ -69,7 +69,6 @@ export default {
 .topmenu-wrapper {
     position: relative;
     overflow-x: auto;
-    margin-bottom: 10px;
     &::-webkit-scrollbar {
         background: none;
         height: 0;

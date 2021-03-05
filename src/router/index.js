@@ -2,6 +2,12 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import routes from "./routes";
 
+VueRouter.prototype.isBack = false;
+VueRouter.prototype.transitionBack = function () {
+    this.isBack = true;
+    this.back();
+}
+
 Vue.use(VueRouter);
 
 const router = new VueRouter({

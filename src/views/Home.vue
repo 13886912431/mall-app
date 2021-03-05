@@ -1,18 +1,8 @@
 <template>
-    <div class="home-wrapper tabber-bottom">
+    <div class="home-wrapper">
         home
 
         <Tabbar :active="0" />
     </div>
     
 </template>
-
-<script>
-export default {
-    name: "Home",
-}
-</script>
-
-<style lang="less" scoped>
-
-</style>

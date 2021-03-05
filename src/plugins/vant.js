@@ -10,8 +10,19 @@ import {
     Empty,
     PullRefresh,
     List,
-    Stepper
+    Stepper,
+    NavBar,
+    SubmitBar,
+    Checkbox,
+    CheckboxGroup,
+    Toast,
+    Dialog,
+    Search,
+    Cell,
 } from "vant";
+
+Vue.prototype.$toast = Toast;
+Vue.prototype.$dialog = Dialog;
 
 Vue.use(Button)
     .use(Tabbar)
@@ -23,4 +34,10 @@ Vue.use(Button)
     .use(Empty)
     .use(PullRefresh)
     .use(List)
-    .use(Stepper);
+    .use(Stepper)
+    .use(NavBar)
+    .use(SubmitBar)
+    .use(Checkbox)
+    .use(CheckboxGroup)
+    .use(Search)
+    .use(Cell);

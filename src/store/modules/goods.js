@@ -11,38 +11,42 @@ export default {
         type: null,
         limit: 10,
         sort: "all",
-        counterMap: {}
+        counterMap: {},
     },
     mutations: {
+        // 设置侧边菜单列表
         setSideList(state, payload) {
             state.sideList = payload;
         },
+        // 设置商品列表
         setGoodsList(state, payload) {
             state.goodsList = [...state.goodsList, ...payload];
         },
+        // 重置商品列表
         resetGoodsList(state) {
             state.goodsList = [];
         },
+        // 设置加载侧边菜单列表状态
         setLoadSideStatus(state, payload) {
             state.loadingSide = payload;
         },
+        // 设置商品列表类型
         setGoodsListType(state, payload) {
             state.type = payload;
         },
+        // 设置商品列表排序方式
         setGoodsListSort(state, payload) {
             state.sort = payload;
         },
+        // 设置商品id与购物车数量映射关系
         setCounterMap(state, payload) {
             state.counterMap = payload;
         },
+        // 改变商品id与购物车数量映射关系
         changeCounterMap(state, { id, count }) {
-            if (count === 0) {
-                Vue.delete(state.counterMap, id);
-            } else {
-                Vue.set(state.counterMap, id, count);
-            }
+            (count <= 0 || !count) ? Vue.delete(state.counterMap, id) : Vue.set(state.counterMap, id, count);
             localStorage.setItem("counterMap", JSON.stringify(state.counterMap));            
-        }
+        },
     },
     actions: {
         // 左侧菜单列表
@@ -50,7 +54,7 @@ export default {
             commit("setLoadSideStatus", true);
             const res = await api.getSideList(type);
             commit("setSideList", res);
-            await delay(500);
+            await delay(100);
             commit("setLoadSideStatus", false);
         },
         // 商品列表
@@ -64,16 +68,6 @@ export default {
                 type,
                 sort
             });
-            
-            res.list.forEach(item => {
-                const count = state.counterMap[item.id];
-                if (count) {
-                    item.buyCount = count;
-                } else {
-                    item.buyCount = 0;
-                }
-            })
-            console.log(res.list);
             commit("setGoodsList", res.list);
             commit("setGoodsListType", type);
             commit("setGoodsListSort", sort);

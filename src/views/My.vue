@@ -1,5 +1,5 @@
 <template>
-    <div class="wy-wrapper tabber-bottom">
+    <div class="wy-wrapper">
         my
 
         <Tabbar :active="3" />

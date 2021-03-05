@@ -37,41 +37,13 @@
                     finished-text="没有更多了"
                     @load="onLoad"
                 >
-                    <ul class="goods">
-                        <li class="item"
-                            v-for="(item, index) in goodsList"
-                            :key="index"
-                        >
-                            <div class="img">
-                                <van-image :src="item.images[0]" lazy-load>
-                                    <template v-slot:loading>
-                                        <van-loading type="spinner" size="20" />
-                                    </template>
-                                </van-image>
-                            </div>
-                            <div class="content">   
-                                <div class="title">{{ item.title }}</div>
-                                <div class="desc">{{ item.desc }}</div>
-                                <div class="tags">
-                                    <span v-for="(tag, index) in item.tags" :key="index">
-                                        {{ tag }}
-                                    </span> 
-                                </div>
-                                <div class="bottom between">
-                                    <div class="price">¥{{ item.price }}</div>
-                                    <van-stepper
-                                        v-model="item.buyCount"
-                                        theme="round"
-                                        disable-input
-                                        :show-input="item.buyCount !== 0"
-                                        :show-minus="item.buyCount !== 0"
-                                        min="0"
-                                        @change="changeBuyCount(item.id, $event)"
-                                    />
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+                    <GoodsCard
+                        v-for="(item, index) in goodsList"
+                        :key="index"
+                        v-bind="item"
+                        :count="counterMap[item.id] || 0"
+                        :useFly="true"
+                    />
                 </van-list>
             </van-pull-refresh>
         </div>
@@ -94,24 +66,19 @@ export default {
     },
     computed: {
         ...mapState("goods", {
-            loadingGoods: "loadingGoods",
-            goodsList: "goodsList"
+            goodsList: "goodsList",
+            counterMap: "counterMap"
         })
     },
     methods: {
         ...mapMutations("goods", {
             resetGoodsList: "resetGoodsList",
-            changeCounterMap: "changeCounterMap"
         }),
         changeOptionActive(sort) {
             if (this.optionActive === sort) return;
 
             if (sort === "price") {
-                if (this.optionActive === "price-up") {
-                    this.optionActive = "price-down";
-                } else {
-                    this.optionActive = "price-up";
-                }
+                this.optionActive = this.optionActive === "price-up" ? "price-down" : "price-up";
             } else {
                 this.optionActive = sort;
             }
@@ -140,13 +107,6 @@ export default {
                 this.loading = false;
             }
         },
-        /**
-         * @param {*} id 商品id
-         * @param {*} count 该商品购买数量
-         */
-        changeBuyCount(id, count) {
-            this.changeCounterMap({ id, count });
-        }
     }
 }
 </script>
@@ -161,6 +121,9 @@ export default {
 }
 .goods-content {
     height: 100%;
+}
+.van-list {
+    padding-right: 10px;
 }
 .options {
     border-top: 1px solid #eee;
@@ -193,11 +156,11 @@ export default {
     }
     .price::after {
         border-top-color: #eee;
-        bottom: 3px;
+        bottom: 2px;
     }
     .price::before {
         border-bottom-color: #eee;
-        top: 3px;
+        top: 4px;
     }
     .price.price-down::after {
         border-top-color: #ff1a90;
@@ -206,82 +169,15 @@ export default {
         border-bottom-color: #ff1a90;
     }
 }
-.goods {
-    .item {
-        display: flex;
-        height: 100px;
-        border-bottom: 1px solid #eee;
-        box-sizing: border-box;
-    }
-    .content {
-        width: 170px;
-    }
-    .img {
-        margin-right: 20px;
-        .van-image {
-            width: 90px;
-            height: 90px;
-        }
-    }
-    .bottom {
-        height: 28px;
-    }
-    .title {
-        margin: 5px 0;
-        font-size: 13px;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-    }
-    .desc {
-        color: #cecece;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-    }
-    .tags {
-        color: #cecece;
-        margin: 4px 0;
-        span {
-            border: 1px solid #cecece;
-            padding: 2px;
-            border-radius: 5px;
-            &:not(:last-child) {
-                margin-right: 5px;
-            }
-        }
-    }
-    .price {
-        color: #ff1a90;
-        font-size: 14px;
-        font-weight: bold;
-    }
-}
 
 .van-empty {
     /deep/ .van-empty__image {
         width: 60px;
         height: 60px;
     }
-    
 }
 .van-pull-refresh {
     overflow: auto;
     height: calc(100% - 25px);
-}
-
-.van-stepper {
-    /deep/ button {
-        width: 20px;
-        height: 20px;
-        &.van-stepper__plus {
-            background-color: #ff1a90;
-        }
-        &.van-stepper__minus {
-            color: #ff1a90;
-            border-color: #ff1a90;
-        }
-    }
-    
 }
 </style>

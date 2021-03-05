@@ -1,14 +1,14 @@
 <template>
-    <div class="classify-wrapper tabber-bottom">
-        <div class="search center">
+    <div class="classify-wrapper">
+        <router-link to="/search" tag="div" class="search center">
             <van-icon name="search" />
             <span>荔枝水果9.99</span>
-        </div>
+        </router-link>
 
         <!-- 顶部横向菜单 -->
         <TopMenu />
 
-        <van-loading vertical color="#ffc0cb" v-if="loadingSide">加载中...</van-loading>
+        <van-loading v-if="loadingSide" vertical color="#ffc0cb">加载中...</van-loading>
 
         <template v-else>
             <!-- 左侧纵向菜单 -->
