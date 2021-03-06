@@ -37,6 +37,9 @@ export default {
 </script>
 
 <style lang="less">
+body {
+    overflow-x: hidden;
+}
 #app {
     font-size: 12px;
     height: 100%;
@@ -48,7 +51,6 @@ export default {
     width: 100%;
     height: 100%;
     background: #fff;
-    
 }
 
 // 进入动画 -- 进入页面动画
@@ -61,7 +63,7 @@ export default {
 }
 .in-enter-active {
     z-index: 999;
-    transition: transform .3s;
+    transition: transform .4s;
 }
 .in-leave-active {
     z-index: 0;
@@ -77,6 +79,6 @@ export default {
     transform: translateX(100vw);
 }
 .out-leave-active {
-    transition: transform .3s;
+    transition: transform .4s;
 }
 </style>
