@@ -9,6 +9,7 @@
             @touchstart="onmove = false"
             @touchmove="onmove = true"
             @touchend="changeActive(index)"
+            @click="changeActive(index)"
         >
             {{ index === 0 ? '全部' : item }}
         </div>
@@ -115,6 +116,8 @@ export default {
     text-align: center;
     line-height: 40px;
     position: relative;
+    cursor: pointer;
+
     &.active {
         color: #ff1a90;
         font-weight: bold;

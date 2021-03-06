@@ -48,33 +48,35 @@ export default {
     width: 100%;
     height: 100%;
     background: #fff;
+    
 }
 
 // 进入动画 -- 进入页面动画
 .in-enter { 
-    opacity: 0;
+    z-index: 999;
     transform: translateX(100vw);
 }
 .in-enter-to {
-    opacity: 1;
     transform: translateX(0); 
 }
 .in-enter-active {
-    transition: transform .4s, opacity .4s;
-    z-index: 100;
+    z-index: 999;
+    transition: transform .3s;
+}
+.in-leave-active {
+    z-index: 0;
 }
 
 // 退出动画 -- 离开页面动画
 .out-leave {
-    opacity: 1;
+    z-index: 999;
     transform: translateX(0);
 }
 .out-leave-to {
-    opacity: 0;
+    z-index: 999;
     transform: translateX(100vw);
 }
 .out-leave-active {
-    transition: transform .4s, opacity .4s;
-    z-index: 100;
+    transition: transform .3s;
 }
 </style>

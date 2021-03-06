@@ -9,6 +9,7 @@
             @touchstart="onmove = false"
             @touchmove="onmove = true"
             @touchend="changeActive(index)"
+            @click="changeActive(index)"
         >
             <div class="img-wrap center">
                 <van-image :src="item.imgURL" />
@@ -80,6 +81,7 @@ export default {
     height: 70px;
     padding: 0 8px;
     flex-direction: column;
+    cursor: pointer;
     
     .img-wrap {
         border-width: 2px;

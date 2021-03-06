@@ -206,6 +206,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.search-wrapper {
+    z-index: 2;
+}
 .search-container {
     position: fixed;
     top: 0;

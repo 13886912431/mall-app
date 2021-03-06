@@ -107,11 +107,11 @@ export default {
         },
         // 全选
         checkAll() {
-            this.$refs.checkedGroup.toggleAll(true);
+            this.$refs.checkedGroup && this.$refs.checkedGroup.toggleAll(true);
         },
         // 取消全选
         cancelAll() {
-            this.$refs.checkedGroup.toggleAll(false);
+            this.$refs.checkedGroup && this.$refs.checkedGroup.toggleAll(false);
         },
         async getShoppingGoods() {
             const res = await api.getGoodsByIds({
@@ -131,7 +131,8 @@ export default {
     background-color: #eee;
     padding-bottom: 100px;
     box-sizing: border-box;
-}
+    z-index: 3;
+} 
 .van-submit-bar {
     bottom: 50px;
 }
@@ -146,5 +147,11 @@ export default {
 .empty {
     padding: 46px 0 40px;
     background-color: #fff;
+    img {
+        width: 100%;
+        max-width: 375px;
+        display: block;
+        margin: 0 auto;
+    }
 }
 </style>

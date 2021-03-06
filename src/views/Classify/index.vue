@@ -55,6 +55,7 @@ export default {
     color: #a1a1a1;
     border-radius: 10px;
     margin: 11px auto;
+    cursor: pointer;
 }
 .van-loading {
     margin-top: 50px;

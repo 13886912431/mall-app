@@ -137,6 +137,8 @@ export default {
         height: 100%;
         line-height: 25px;
         width: 50px;
+        cursor: pointer;
+
         &.active {
             color: #ff1a90;
             font-weight: bold;
