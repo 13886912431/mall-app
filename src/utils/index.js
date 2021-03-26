@@ -15,10 +15,7 @@ export function debounce(func, wait = 300) {
     if (typeof func !== "function") return;
     let timer = null;
     return function(...arg) {
-        if (timer) {
-            clearTimeout(timer);
-            timer = null;
-        }
+        clearTimeout(timer);
         timer = setTimeout(() => {
             func.apply(this, arg);
         }, wait);
