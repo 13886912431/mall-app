@@ -8,7 +8,7 @@ const instance = axios.create({
     params: {
         appkey
     },
-    timeout: 10000,
+    timeout: 10000
 });
 
 instance.interceptors.response.use(response => {
